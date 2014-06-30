@@ -3,13 +3,13 @@ pdftopng
 
 Convert a pdf image into a png of a configurable resolution.
 
-$$ Dependencies $$
+### Dependencies
 
 The program depends on the utils ``convert`` and ``pdftoppm``, which are found
 on most commonly used linux distributions. For instance, on Debian they are
 respectively in the ``imagemagick`` and ``poppler-utils`` packages.
 
-$$ TODO $$
+### TODO
 
 Improve the following:
    * documentation
