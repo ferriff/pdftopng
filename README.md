@@ -3,7 +3,7 @@ pdftopng
 
 Convert a pdf image into a png of a configurable resolution.
 
-### Installation
+## Installation
 
 Clone the repository, change the permission of the executable (``chmod 755
 pdftopng``) and enjoy.
@@ -16,13 +16,13 @@ One way to do it is adding to your shell initialization file a line of the type
     setenv PATH "/your/cloned/repository:$PATH" # for csh-like shells
 
 
-### Dependencies
+## Dependencies
 
 The program depends on the utils ``convert`` and ``pdftoppm``, which are found
 on most common GNU/Linux distributions. For instance, on Debian they are
 respectively in the ``imagemagick`` and ``poppler-utils`` packages.
 
-### TODO
+## TODO
 
 Improve the following:
 * documentation
