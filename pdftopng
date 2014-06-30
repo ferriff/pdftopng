@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# federico dot ferri at cern dot
+
+prog=`basename $0`
+cmd_opt=""
+res=150
+crop=""
+tmp_ppm_file="tmp_ppm_file_`date +%s`.ppm"
+output=""
+
+usage()
+{
+    echo "Usage: $prog [-r resolution in DPI] <pdf file>"
+    exit 1
+}
+
+error()
+{
+    echo "$prog: error: $1"
+    [[ -n $2 ]] && exit $2
+}
+
+clean()
+{
+    echo "cleaning"
+    [[ -f $tmp_ppm_file ]] && rm $tmp_ppm_file
+    exit -1
+}
+
+trap clean INT
+
+OPTIND=1
+while getopts "cr:ho:" opt
+do
+        case "$opt" in
+                r ) res=$OPTARG ;;
+                c ) crop="crop" ;;
+                o ) output=$OPTARG ;;
+                h ) usage ;;
+                * ) usage ;;
+                \?) echo "Invalid option: -$OPTARG"; exit 1 ;;
+                 :) echo "Option -$OPTARG requires an argument."; exit 1 ;;
+        esac
+done
+shift $(( $OPTIND - 1 ))
+
+infile="$1"
+[[ -z $infile ]] && error "no input file specified" 1
+
+[[ -z $output ]] && output="${infile%pdf}png"
+
+check=`printf %d $res > /dev/null 2>&1`
+#echo $?
+#[[ ( $? != 0 ) && ( -n $res ) ]] && error "argument of -r must be an integer, \`$res' given" 2
+[[ $? != 0 ]] && error "argument of -r must be an integer, \`$res' given" 2
+[[ -n $res ]] && cmd_opt="-r $res"
+[[ -n $crop ]] && cmd_opt="$cmd_opt -cropbox"
+
+echo "processing \`$infile' at \`$res' DPI resolution"
+pdftoppm $cmd_opt $infile > $tmp_ppm_file && \
+convert $tmp_ppm_file $output
+clean
