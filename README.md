@@ -1,4 +1,4 @@
 pdftopng
 ========
 
-convert pdf to png with a specific resolution
+Convert a pdf image into a png of a configurable resolution.
