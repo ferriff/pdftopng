@@ -25,7 +25,7 @@ clean()
 {
     echo "cleaning"
     [[ -f $tmp_ppm_file ]] && rm $tmp_ppm_file
-    exit -1
+    [[ -n $1 ]] && exit $1
 }
 
 trap clean INT
@@ -60,4 +60,4 @@ check=`printf %d $res > /dev/null 2>&1`
 echo "processing \`$infile' at \`$res' DPI resolution"
 pdftoppm $cmd_opt $infile > $tmp_ppm_file && \
 convert $tmp_ppm_file $output
-clean
+clean 0
