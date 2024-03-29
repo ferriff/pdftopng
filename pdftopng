@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# federico dot ferri at cern dot
+# federico dot ferri at cern dot ch
 
 prog=`basename $0`
 cmd_opt=""
