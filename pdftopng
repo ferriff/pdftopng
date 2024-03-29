@@ -45,7 +45,8 @@ do
 done
 shift $(( $OPTIND - 1 ))
 
-infile="$1"
+infile=$@
+echo $infile
 [[ -z $infile ]] && error "no input file specified" 1
 
 [[ -z $output ]] && output="${infile%pdf}png"
@@ -57,7 +58,10 @@ check=`printf %d $res > /dev/null 2>&1`
 [[ -n $res ]] && cmd_opt="-r $res"
 [[ -n $crop ]] && cmd_opt="$cmd_opt -cropbox"
 
-echo "processing \`$infile' at \`$res' DPI resolution"
-pdftoppm $cmd_opt $infile > $tmp_ppm_file && \
-convert $tmp_ppm_file $output
+for i in $infile
+do
+        echo "processing \`$i' at \`$res' DPI resolution"
+        pdftoppm $cmd_opt $i > $tmp_ppm_file && \
+                convert $tmp_ppm_file $output
+done
 clean 0
